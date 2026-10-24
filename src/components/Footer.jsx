@@ -16,11 +16,11 @@ export default function Footer() {
               <span className="text-xl font-black text-white tracking-tight">DocumentAI</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              La plataforma de visión inteligente que transforma comprobantes, facturas y recibos en hojas de cálculo limpias con fórmulas.
+              Transforma facturas, comprobantes y recibos en hojas de cálculo claras y listas para usar.
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
               <ShieldCheck className="w-4 h-4" />
-              <span>Cifrado bancario AES-256</span>
+              <span>Documentos protegidos durante el procesamiento</span>
             </div>
           </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
 
           {/* Formats */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">Integraciones</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">Exportaciones</h4>
             <ul className="space-y-2.5 text-xs">
               <li><span className="text-slate-300">Microsoft Excel (.xlsx)</span></li>
               <li><span className="text-slate-300">Google Sheets</span></li>
@@ -52,7 +52,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               <li><a href="#" className="hover:text-white transition-colors">Política de Privacidad</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Términos de Servicio</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cumplimiento GDPR</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">¿Hablamos?</a></li>
               <li><a href="#contacto" className="hover:text-white transition-colors">Contacto</a></li>
             </ul>
           </div>
@@ -62,9 +62,6 @@ export default function Footer() {
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs gap-4">
           <p>© 2026 DocumentAI Technologies Inc. Todos los derechos reservados.</p>
-          <p className="flex items-center gap-1 text-slate-500">
-            Desarrollado para máxima precisión y velocidad en flujos contables.
-          </p>
         </div>
       </div>
     </footer>

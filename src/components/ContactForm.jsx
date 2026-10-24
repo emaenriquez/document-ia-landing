@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, Building2, User, MessageSquare } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function ContactForm() {
+  const sectionRef = useScrollReveal();
   const [formData, setFormData] = useState({
     nombre: '',
     empresa: '',
@@ -16,7 +18,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contacto" className="py-24 bg-[#f8fafc] border-b border-slate-200">
+    <section ref={sectionRef} id="contacto" className="py-24 bg-[#f8fafc] border-b border-slate-200">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

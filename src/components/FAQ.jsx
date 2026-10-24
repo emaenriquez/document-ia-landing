@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const FAQS = [
   {
@@ -25,6 +26,7 @@ const FAQS = [
 ];
 
 export default function FAQ() {
+  const sectionRef = useScrollReveal();
   const [openIndex, setOpenIndex] = useState(0);
 
   const toggleFAQ = (index) => {
@@ -32,7 +34,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-24 bg-white">
+    <section ref={sectionRef} className="py-24 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

@@ -18,20 +18,19 @@ export default function Hero() {
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Main Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.12]">
-            Convierte cualquier{' '}
+            De facturas a{' '}
             <span className="relative inline-block text-[#086b6d]">
-              factura o imagen
+              datos
               <svg className="absolute -bottom-2 left-0 w-full h-3 text-[#f7c948]/80" viewBox="0 0 100 20" preserveAspectRatio="none">
                 <path d="M0 15 Q 50 0 100 15" stroke="currentColor" strokeWidth="6" fill="transparent" strokeLinecap="round" />
               </svg>
             </span>{' '}
-            en un Excel limpio en segundos
+            listos para trabajar en cuestión de segundos.
           </h1>
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl font-normal leading-relaxed">
-            Sube lotes de PDFs escaneados, fotos tomadas con el teléfono o tickets. Nuestra IA extrae 
-            tablas de ítems, totales, fechas e impuestos directo a hojas de cálculo con formato contable.
+            Convierte PDFs, fotos y tickets en planillas claras. DocumentAI extrae cada dato, revisa los totales y te entrega un Excel listo para tu equipo.
           </p>
 
           {/* Call to Actions */}
@@ -40,8 +39,7 @@ export default function Hero() {
               href="#contacto"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[#086b6d] hover:bg-[#056467] text-white font-bold text-base shadow-lg shadow-[#086b6d]/30 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
-              <Zap className="w-5 h-5 text-[#f7c948]" />
-              <span>Probar Gratis en mi Empresa</span>
+              <span>Probar Gratis</span>
               <ArrowRight className="w-5 h-5" />
             </a>
             <a
@@ -53,17 +51,6 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Trust points */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm font-semibold text-slate-500">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#086b6d]" />
-              <span>Archivos PDF, JPG, PNG y CSV</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#086b6d]" />
-              <span>Exportación instantánea .XLSX</span>
-            </div>
-          </div>
         </div>
 
         {/* Product Visual Mockup Showcase (Tablet Mockup) */}
@@ -75,17 +62,6 @@ export default function Hero() {
               className="w-full h-auto rounded-xl md:rounded-2xl shadow-inner border border-slate-900/10 object-cover"
             />
             
-            {/* Botón con flecha animada en el medio del mockup según imagen */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-              <a
-                href="#features"
-                aria-label="Desplazarse a características"
-                className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#086b6d] hover:bg-[#056467] text-white shadow-2xl shadow-[#086b6d]/60 border-2 sm:border-4 border-white transition-all duration-300 hover:scale-110 active:scale-95 animate-bounce cursor-pointer"
-              >
-                <ChevronDown className="w-7 h-7 sm:w-8 sm:h-8 text-[#f7c948] group-hover:translate-y-0.5 transition-transform" />
-                <span className="absolute -inset-2 rounded-full bg-[#086b6d]/30 animate-ping pointer-events-none opacity-50" />
-              </a>
-            </div>
 
             {/* Floating verification badge */}
             <div className="hidden sm:flex absolute -bottom-5 -left-4 md:left-8 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-4 shadow-xl items-center gap-3.5">
@@ -105,7 +81,7 @@ export default function Hero() {
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-wider text-teal-200">Exportación Directa</div>
-                <div className="text-sm font-extrabold text-white">Excel con Fórmulas Nativas</div>
+                <div className="text-sm font-extrabold text-white">Excel organizado</div>
               </div>
             </div>
           </div>
