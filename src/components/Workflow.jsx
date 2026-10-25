@@ -37,7 +37,7 @@ export default function Workflow() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">`n          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
             De documentos desordenados a planillas limpias en 3 pasos
           </h2>
           <p className="mt-4 text-slate-600 text-lg">

@@ -30,7 +30,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl font-normal leading-relaxed">
-            Convierte PDFs, fotos y tickets en planillas claras. DocumentAI extrae cada dato, revisa los totales y te entrega un Excel listo para tu equipo.
+            Convierte PDFs, fotos y tickets en planillas claras. DocumentAI extrae cada dato y te entrega un Excel listo para tu equipo.
           </p>
 
           {/* Call to Actions */}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, Building2, User, MessageSquare } from 'lucide-react';
+import { Send, CheckCircle2, Building2, User, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function ContactForm() {
@@ -10,11 +11,44 @@ export default function ContactForm() {
     comentario: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.nombre.trim() || !formData.empresa.trim()) return;
-    setSubmitted(true);
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setError('Las variables de entorno de EmailJS no están configuradas en el archivo .env (VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID o VITE_EMAILJS_PUBLIC_KEY).');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const templateParams = {
+        nombre_completo: formData.nombre.trim(),
+        nombre_negocio: formData.empresa.trim(),
+        comentario: formData.comentario.trim() || 'Sin comentarios adicionales'
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Error al enviar el formulario a través de EmailJS:', err);
+      setError(
+        err?.text || 
+        err?.message || 
+        'Ocurrió un error al enviar tu consulta. Por favor, verifica las credenciales o intenta nuevamente.'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,17 +77,29 @@ export default function ContactForm() {
                 Gracias, <strong>{formData.nombre}</strong>. Nos contactaremos con el equipo de <strong>{formData.empresa}</strong> en menos de 24 horas para habilitar tu acceso.
               </p>
               <button
+                type="button"
                 onClick={() => {
                   setSubmitted(false);
                   setFormData({ nombre: '', empresa: '', comentario: '' });
+                  setError(null);
                 }}
-                className="mt-4 px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
+                className="mt-4 px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
               >
                 Enviar otra solicitud
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3 animate-in fade-in duration-200">
+                  <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" />
+                  <div className="space-y-1">
+                    <p className="font-semibold text-red-800">No se pudo enviar la consulta</p>
+                    <p className="text-xs text-red-600 leading-relaxed">{error}</p>
+                  </div>
+                </div>
+              )}
+
               {/* Nombre */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-2">
@@ -63,10 +109,11 @@ export default function ContactForm() {
                 <input
                   type="text"
                   required
+                  disabled={loading}
                   placeholder="Ej. Emanuel Gómez"
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all"
+                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all disabled:opacity-60"
                 />
               </div>
 
@@ -74,15 +121,16 @@ export default function ContactForm() {
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-2">
                   <Building2 className="w-4 h-4 text-[#086b6d]" />
-                  <span>Empresa o Estudio Contable *</span>
+                  <span>Nombre del Negocio o empresa *</span>
                 </label>
                 <input
                   type="text"
                   required
+                  disabled={loading}
                   placeholder="Ej. Distribuidora Norte S.A."
                   value={formData.empresa}
                   onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all"
+                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all disabled:opacity-60"
                 />
               </div>
 
@@ -94,20 +142,31 @@ export default function ContactForm() {
                 </label>
                 <textarea
                   rows="4"
+                  disabled={loading}
                   placeholder="Cuéntanos qué tipo de documentos procesas (facturas de compra, tickets, recibos) o dudas que tengas..."
                   value={formData.comentario}
                   onChange={(e) => setFormData({ ...formData, comentario: e.target.value })}
-                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl p-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all resize-none"
+                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl p-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all resize-none disabled:opacity-60"
                 />
               </div>
 
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#086b6d] hover:bg-[#056467] text-white text-base font-bold shadow-lg shadow-[#086b6d]/25 transition-all hover:shadow-xl active:scale-95 cursor-pointer"
+                disabled={loading}
+                className="w-full inline-flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#086b6d] hover:bg-[#056467] disabled:opacity-70 disabled:cursor-not-allowed text-white text-base font-bold shadow-lg shadow-[#086b6d]/25 transition-all hover:shadow-xl active:scale-95 cursor-pointer"
               >
-                <span>Solicitar Prueba Gratis</span>
-                <Send className="w-4 h-4 text-[#f7c948]" />
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin text-white" />
+                    <span>Enviando consulta...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Solicitar Prueba Gratis</span>
+                    <Send className="w-4 h-4 text-[#f7c948]" />
+                  </>
+                )}
               </button>
 
               <p className="text-center text-xs text-slate-500">
