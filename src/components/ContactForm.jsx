@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, Building2, User, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle2, Building2, User, MessageSquare, Loader2, AlertCircle, Mail } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import useScrollReveal from '../hooks/useScrollReveal';
 
@@ -7,6 +7,7 @@ export default function ContactForm() {
   const sectionRef = useScrollReveal();
   const [formData, setFormData] = useState({
     nombre: '',
+    gmail: '',
     empresa: '',
     comentario: ''
   });
@@ -16,7 +17,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.nombre.trim() || !formData.empresa.trim()) return;
+    if (!formData.nombre.trim() || !formData.gmail.trim() || !formData.empresa.trim()) return;
 
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -33,6 +34,7 @@ export default function ContactForm() {
 
       const templateParams = {
         nombre_completo: formData.nombre.trim(),
+        gmail: formData.gmail.trim(),
         nombre_negocio: formData.empresa.trim(),
         comentario: formData.comentario.trim() || 'Sin comentarios adicionales'
       };
@@ -74,13 +76,13 @@ export default function ContactForm() {
               </div>
               <h3 className="text-2xl font-black text-slate-900">¡Solicitud recibida con éxito!</h3>
               <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed">
-                Gracias, <strong>{formData.nombre}</strong>. Nos contactaremos con el equipo de <strong>{formData.empresa}</strong> en menos de 24 horas para habilitar tu acceso.
+                Gracias, <strong>{formData.nombre}</strong>. Nos contactaremos a <strong>{formData.gmail}</strong> o con el equipo de <strong>{formData.empresa}</strong> en menos de 24 horas para habilitar tu acceso.
               </p>
               <button
                 type="button"
                 onClick={() => {
                   setSubmitted(false);
-                  setFormData({ nombre: '', empresa: '', comentario: '' });
+                  setFormData({ nombre: '', gmail: '', empresa: '', comentario: '' });
                   setError(null);
                 }}
                 className="mt-4 px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
@@ -113,6 +115,23 @@ export default function ContactForm() {
                   placeholder="Ej. Emanuel Gómez"
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                  className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all disabled:opacity-60"
+                />
+              </div>
+
+              {/* Gmail / Correo */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#086b6d]" />
+                  <span>Gmail / Correo electrónico *</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  disabled={loading}
+                  placeholder="ejemplo@gmail.com"
+                  value={formData.gmail}
+                  onChange={(e) => setFormData({ ...formData, gmail: e.target.value })}
                   className="w-full bg-[#f8fafc] border border-slate-300 rounded-xl px-4 py-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#086b6d]/30 focus:border-[#086b6d] transition-all disabled:opacity-60"
                 />
               </div>
