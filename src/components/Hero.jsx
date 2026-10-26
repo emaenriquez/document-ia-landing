@@ -57,7 +57,7 @@ export default function Hero() {
         <div className="mt-12 relative max-w-5xl mx-auto">
           <div className="relative rounded-2xl md:rounded-3xl p-2 sm:p-4 bg-gradient-to-b from-slate-200/80 to-slate-300/40 border border-slate-300/60 shadow-2xl">
             <img 
-              src="/mockup_tablet.png" 
+              src="/Flujo---3.-Revisar@3x.png" 
               alt="Interfaz de DocumentAI procesando factura de ForgeWorks Manufacturing en tiempo real" 
               className="w-full h-auto rounded-xl md:rounded-2xl shadow-inner border border-slate-900/10 object-cover"
             />
